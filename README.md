@@ -5,7 +5,7 @@
 - Create and add needed config. At least nginx default.conf recommended.
 - Expose container port 5000.
 - Mount volume to /var/www
-- Add at least following files to Docker entrypoint:
+- If you oveddide Docker entrypoint, add at least following lines:
 ```bash
 #!/bin/bash
 export USER_ID=$(id -u)
