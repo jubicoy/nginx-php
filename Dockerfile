@@ -30,11 +30,4 @@ ADD entrypoint.sh /workdir/entrypoint.sh
 RUN chown -R 104:0 /workdir && chown -R 104:0 /var/www
 RUN chmod -R g+rw /workdir && chmod -R a+x /workdir && chmod -R g+rw /var/www
 
-WORKDIR /workdir
-
-USER 104
-
-VOLUME ["/var/www"]
-EXPOSE 5000
-
 ENTRYPOINT ["/workdir/entrypoint.sh"]
