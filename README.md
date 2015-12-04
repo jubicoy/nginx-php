@@ -1,4 +1,4 @@
-# Wordpress OpenShift v3
+# Nginx with php5-fpm for OpenShift v3
 
 #### Usage
 - Extend the image.
