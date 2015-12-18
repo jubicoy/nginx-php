@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y -t unstable libnss-wrapper gettext
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Create some needed directories
-RUN mkdir -p /workdir/sv-child-logs && mkdir /var/www
+RUN mkdir -p /workdir/sv-child-logs
 
 # Add configuration files
 ADD config/default.conf /etc/nginx/conf.d/default.conf
