@@ -5,15 +5,15 @@ MAINTAINER Matti Rita-Kasari "matti.rita-kasari@jubic.fi"
 ADD ./apt/unstable.pref /etc/apt/preferences.d/unstable.pref
 ADD ./apt/unstable.list /etc/apt/sources.list.d/unstable.list
 
-RUN apt-get update && apt-get install -y supervisor php5-fpm
+RUN apt-get update && apt-get install -y supervisor php5-fpm gettext
 
 # nss-wrapper for OpenShift user management.
-RUN apt-get update && apt-get install -y -t unstable libnss-wrapper gettext
+RUN apt-get update && apt-get install -y -t unstable libnss-wrapper
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Create some needed directories
-RUN mkdir -p /workdir/sv-child-logs && mkdir /var/www
+RUN mkdir -p /workdir/sv-child-logs
 
 # Add configuration files
 ADD config/default.conf /etc/nginx/conf.d/default.conf
