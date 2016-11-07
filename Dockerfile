@@ -1,14 +1,8 @@
 FROM jubicoy/nginx:full
 MAINTAINER Matti Rita-Kasari "matti.rita-kasari@jubic.fi"
 
-# Unstable repo for certain packages.
-ADD ./apt/unstable.pref /etc/apt/preferences.d/unstable.pref
-ADD ./apt/unstable.list /etc/apt/sources.list.d/unstable.list
-
-RUN apt-get update && apt-get install -y supervisor php5-fpm gettext
-
-# nss-wrapper for OpenShift user management.
-RUN apt-get update && apt-get install -y -t unstable libnss-wrapper
+RUN apt-get update && apt-get install -y supervisor gettext wget \
+  libnss-wrapper php7.0 php7.0-fpm
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -19,8 +13,8 @@ RUN mkdir -p /workdir/sv-child-logs
 ADD config/default.conf /etc/nginx/conf.d/default.conf
 ADD config/nginx.conf /etc/nginx/nginx.conf
 ADD config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-ADD config/php-fpm.conf /etc/php5/fpm/php-fpm.conf
-ADD config/www.conf /etc/php5/fpm/pool.d/www.conf
+ADD config/php-fpm.conf /etc/php/7.0/fpm/php-fpm.conf
+ADD config/www.conf /etc/php/7.0/fpm/pool.d/www.conf
 ADD passwd.template /workdir/passwd.template
 
 # Add entrypoint script
