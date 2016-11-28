@@ -1,4 +1,4 @@
-FROM jubicoy/nginx:full
+FROM jubicoy/nginx:full-ubuntu
 MAINTAINER Matti Rita-Kasari "matti.rita-kasari@jubic.fi"
 
 RUN apt-get update && apt-get install -y supervisor gettext wget \
