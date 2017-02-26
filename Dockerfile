@@ -2,7 +2,7 @@ FROM jubicoy/nginx:full-ubuntu
 MAINTAINER Matti Rita-Kasari "matti.rita-kasari@jubic.fi"
 
 RUN apt-get update && apt-get install -y supervisor gettext wget \
-  libnss-wrapper php7.0 php7.0-fpm
+  libnss-wrapper php7.0
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
