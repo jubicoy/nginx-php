@@ -2,9 +2,8 @@ FROM jubicoy/nginx:full-ubuntu
 MAINTAINER Matti Rita-Kasari "matti.rita-kasari@jubic.fi"
 
 RUN apt-get update && apt-get install -y supervisor gettext wget \
-  libnss-wrapper php7.0
-
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+  libnss-wrapper php7.0 && \
+  apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Create some needed directories
 RUN mkdir -p /workdir/sv-child-logs
