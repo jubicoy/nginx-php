@@ -1,11 +1,12 @@
-FROM jubicoy/nginx:full
+FROM tommylau/php-5.2
 MAINTAINER Matti Rita-Kasari "matti.rita-kasari@jubic.fi"
 
 # Unstable repo for certain packages.
 ADD ./apt/unstable.pref /etc/apt/preferences.d/unstable.pref
 ADD ./apt/unstable.list /etc/apt/sources.list.d/unstable.list
 
-RUN apt-get update && apt-get install -y supervisor php5-fpm gettext
+#RUN apt-get update && apt-get install -y supervisor gettext bzip2 g++ gcc build-essential libxml2-dev libssl-dev libmysqlclient-dev libxslt-dev libmcrypt-dev libfcgi-dev libcurl4-openssl-dev pkg-config libsasl2-dev autoconf libbz2-dev libjpeg-dev
+RUN apt-get update && apt-get install -y supervisor gettext nginx
 
 # nss-wrapper for OpenShift user management.
 RUN apt-get update && apt-get install -y -t unstable libnss-wrapper
@@ -29,6 +30,19 @@ ADD entrypoint.sh /workdir/entrypoint.sh
 # Fix permissions issues
 RUN chown -R 104:0 /workdir && chown -R 104:0 /var/www
 RUN chmod -R g+rw /workdir && chmod -R a+x /workdir && chmod -R g+rw /var/www
+RUN chmod -R 777 /var/run
+
+# forward request and error logs to docker log collector
+RUN ln -sf /dev/stdout /var/log/nginx/access.log
+RUN ln -sf /dev/stderr /var/log/nginx/error.log
+
+COPY fix-permissions /usr/libexec/fix-permissions
+RUN mkdir -p /run/nginx /var/cache/nginx \
+  && /usr/libexec/fix-permissions /run/nginx \
+  && /usr/libexec/fix-permissions /var/cache/nginx \
+  && /usr/libexec/fix-permissions /var/lib/nginx \
+  && /usr/libexec/fix-permissions /etc/nginx \
+  && /usr/libexec/fix-permissions /var/log/nginx
 
 WORKDIR /workdir
 
