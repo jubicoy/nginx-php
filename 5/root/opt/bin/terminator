@@ -1,0 +1,10 @@
+#!/bin/bash
+
+printf 'READY\n'
+while read line; do
+  kill "$(cat /workdir/supervisord.pid)"
+  printf 'RESULT 2\nOK'
+
+  sleep 1
+  printf 'READY\n'
+done
