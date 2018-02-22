@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+  echo 'Error: Prefix must be supplied. (prefix-logs desired-prefix)'
+  exit 1
+fi
+
+__prefix="${1}"
+
+while read line; do
+  echo "[${__prefix}] ${line}"
+done
