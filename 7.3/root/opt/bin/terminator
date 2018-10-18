@@ -1,0 +1,33 @@
+#!/usr/bin/python
+
+import os
+import signal
+import sys
+
+def write_stdout(s):
+    sys.stdout.write(s)
+    sys.stdout.flush()
+
+def write_stderr(s):
+    sys.stderr.write(s)
+    sys.stderr.flush()
+
+while 1:
+    write_stdout('READY\n')
+
+    line = sys.stdin.readline()
+    headers = dict([ x.split(':') for x in line.split() ])
+    data = sys.stdin.read(int(headers['len']))
+
+    message = dict([ x.split(':') for x in data.split() ])
+    procname = message['processname']
+
+    if procname == 'php-fpm' or procname == 'nginx':
+        pid = "1"
+        with open('/workdir/supervisord.pid', 'r') as pid_file:
+            pid = pid_file.read()
+
+        os.kill(int(pid), signal.SIGTERM)
+
+    write_stdout('RESULT 2\nOK')
+
